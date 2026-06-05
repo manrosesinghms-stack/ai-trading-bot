@@ -2,9 +2,11 @@
   "running": true,
   "symbols": [
     "XAUUSD",
+    "USDCAD",
+    "EURUSD",
     "GBPUSD",
-    "EURJPY",
-    "USDCAD"
+    "USDJPY",
+    "AUDUSD"
   ],
   "risk_pct": 2,
   "max_positions": 6,

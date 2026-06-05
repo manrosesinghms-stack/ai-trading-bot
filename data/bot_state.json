@@ -1,9 +1,24 @@
 {
-  "balance": 100.0,
-  "start_balance": 100.0,
-  "positions": [],
+  "balance": 500.0,
+  "start_balance": 500.0,
+  "positions": [
+    {
+      "id": 1,
+      "symbol": "USDCAD",
+      "direction": "Buy",
+      "entry": 1.3947499990463257,
+      "sl": 1.39155,
+      "tp": 1.39635,
+      "risk_usd": 10.0,
+      "atr": 0.001598120228005037,
+      "tf": "H1",
+      "opened_at": "2026-06-05 18:48:14 UTC",
+      "pnl": 0.0,
+      "current_price": 1.3947499990463257
+    }
+  ],
   "trades": [],
-  "scan_count": 0,
-  "started_at": "2026-06-05 17:07:19 UTC",
-  "last_scan": null
+  "scan_count": 1,
+  "started_at": "2026-06-05 18:48:12 UTC",
+  "last_scan": "2026-06-05 18:48:15 UTC"
 }

@@ -25,11 +25,14 @@ CONFIG_FILE = DATA / "bot_config.json"
 
 # ── Optimized config — each pair uses its OWN best validated timeframe, min-signal
 #    count, and SL/TP (from 70/30 walk-forward; only OOS profit-factor>1.05 pairs).
+# H1 (hourly) configs — frequent, VISIBLE trades you can watch (entry/SL/TP/stats)
 PER_PAIR = {
-    "XAUUSD": {"tf": "D1", "min_sig": 3, "sl_atr": 0.5, "tp_atr": 4.0},  # OOS PF 3.34
-    "GBPUSD": {"tf": "D1", "min_sig": 3, "sl_atr": 1.5, "tp_atr": 1.5},  # OOS PF 2.80
-    "EURJPY": {"tf": "D1", "min_sig": 3, "sl_atr": 2.5, "tp_atr": 1.5},  # OOS PF 2.39
-    "USDCAD": {"tf": "H1", "min_sig": 4, "sl_atr": 2.5, "tp_atr": 1.0},  # OOS PF 1.42
+    "XAUUSD": {"tf": "H1", "min_sig": 2, "sl_atr": 1.5, "tp_atr": 1.0},
+    "USDCAD": {"tf": "H1", "min_sig": 2, "sl_atr": 2.0, "tp_atr": 1.0},
+    "EURUSD": {"tf": "H1", "min_sig": 2, "sl_atr": 1.5, "tp_atr": 1.5},
+    "GBPUSD": {"tf": "H1", "min_sig": 2, "sl_atr": 1.5, "tp_atr": 1.5},
+    "USDJPY": {"tf": "H1", "min_sig": 2, "sl_atr": 1.5, "tp_atr": 1.5},
+    "AUDUSD": {"tf": "H1", "min_sig": 2, "sl_atr": 2.0, "tp_atr": 1.0},
 }
 DEFAULT_CONFIG = {
     "running":       True,
@@ -60,7 +63,7 @@ def load_state():
             return json.loads(STATE_FILE.read_text())
         except Exception:
             pass
-    return {"balance": 100.0, "start_balance": 100.0, "positions": [],
+    return {"balance": 500.0, "start_balance": 500.0, "positions": [],
             "trades": [], "scan_count": 0, "started_at": now(), "last_scan": None}
 
 
