@@ -2,13 +2,11 @@
   "running": true,
   "symbols": [
     "XAUUSD",
-    "USDCAD",
+    "GBPUSD",
     "EURJPY",
-    "AUDUSD"
+    "USDCAD"
   ],
-  "timeframe": "H1",
-  "min_conf_pct": 45,
   "risk_pct": 2,
-  "max_positions": 8,
+  "max_positions": 6,
   "news_filter": true
 }

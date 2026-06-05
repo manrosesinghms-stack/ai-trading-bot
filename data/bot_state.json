@@ -1,62 +1,9 @@
 {
   "balance": 100.0,
   "start_balance": 100.0,
-  "positions": [
-    {
-      "id": 1,
-      "symbol": "XAUUSD",
-      "direction": "Sell",
-      "entry": 4357.5,
-      "sl": 4392.66141,
-      "tp": 4334.05906,
-      "risk_usd": 2.0,
-      "atr": 23.44094286616328,
-      "opened_at": "2026-06-05 16:35:55 UTC",
-      "pnl": 0.0,
-      "current_price": 4357.5
-    },
-    {
-      "id": 2,
-      "symbol": "USDCAD",
-      "direction": "Buy",
-      "entry": 1.3938000202178955,
-      "sl": 1.39052,
-      "tp": 1.39544,
-      "risk_usd": 2.0,
-      "atr": 0.0016414251216485647,
-      "opened_at": "2026-06-05 16:35:55 UTC",
-      "pnl": 0.0,
-      "current_price": 1.3938000202178955
-    },
-    {
-      "id": 3,
-      "symbol": "EURJPY",
-      "direction": "Sell",
-      "entry": 184.7310028076172,
-      "sl": 184.92296,
-      "tp": 184.53905,
-      "risk_usd": 2.0,
-      "atr": 0.1919544469927296,
-      "opened_at": "2026-06-05 16:35:56 UTC",
-      "pnl": 0.0,
-      "current_price": 184.7310028076172
-    },
-    {
-      "id": 4,
-      "symbol": "AUDUSD",
-      "direction": "Sell",
-      "entry": 0.7053678035736084,
-      "sl": 0.70769,
-      "tp": 0.70421,
-      "risk_usd": 2.0,
-      "atr": 0.0011597158896385093,
-      "opened_at": "2026-06-05 16:35:56 UTC",
-      "pnl": 0.0,
-      "current_price": 0.7053678035736084
-    }
-  ],
+  "positions": [],
   "trades": [],
-  "scan_count": 1,
-  "started_at": "2026-06-05 16:30:33 UTC",
-  "last_scan": "2026-06-05 16:35:56 UTC"
+  "scan_count": 0,
+  "started_at": "2026-06-05 17:07:19 UTC",
+  "last_scan": null
 }

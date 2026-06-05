@@ -1,0 +1,114 @@
+{
+  "EURUSD": {
+    "interval": "1h",
+    "min_signals": 4,
+    "sl_atr": 2.5,
+    "tp_atr": 2.5,
+    "oos": {
+      "trades": 35,
+      "return": -4.9,
+      "win_rate": 48.6,
+      "pf": 0.87,
+      "max_dd": -10.5
+    },
+    "edge": false
+  },
+  "GBPUSD": {
+    "interval": "1d",
+    "min_signals": 3,
+    "sl_atr": 1.5,
+    "tp_atr": 1.5,
+    "oos": {
+      "trades": 20,
+      "return": 21.3,
+      "win_rate": 75.0,
+      "pf": 2.8,
+      "max_dd": -4.1
+    },
+    "edge": true
+  },
+  "USDJPY": {
+    "interval": "1h",
+    "min_signals": 3,
+    "sl_atr": 1.5,
+    "tp_atr": 3.0,
+    "oos": {
+      "trades": 279,
+      "return": -77.3,
+      "win_rate": 26.2,
+      "pf": 0.65,
+      "max_dd": -77.8
+    },
+    "edge": false
+  },
+  "XAUUSD": {
+    "interval": "1d",
+    "min_signals": 3,
+    "sl_atr": 0.5,
+    "tp_atr": 4.0,
+    "oos": {
+      "trades": 33,
+      "return": 175.5,
+      "win_rate": 30.3,
+      "pf": 3.34,
+      "max_dd": -13.3
+    },
+    "edge": true
+  },
+  "AUDUSD": {
+    "interval": "1h",
+    "min_signals": 4,
+    "sl_atr": 2.5,
+    "tp_atr": 1.0,
+    "oos": {
+      "trades": 63,
+      "return": 0.3,
+      "win_rate": 76.2,
+      "pf": 1.01,
+      "max_dd": -6.7
+    },
+    "edge": false
+  },
+  "USDCAD": {
+    "interval": "1h",
+    "min_signals": 4,
+    "sl_atr": 2.5,
+    "tp_atr": 1.0,
+    "oos": {
+      "trades": 62,
+      "return": 11.0,
+      "win_rate": 80.6,
+      "pf": 1.42,
+      "max_dd": -7.4
+    },
+    "edge": true
+  },
+  "GBPJPY": {
+    "interval": "1h",
+    "min_signals": 4,
+    "sl_atr": 2.5,
+    "tp_atr": 1.5,
+    "oos": {
+      "trades": 60,
+      "return": -29.4,
+      "win_rate": 46.7,
+      "pf": 0.48,
+      "max_dd": -31.0
+    },
+    "edge": false
+  },
+  "EURJPY": {
+    "interval": "1d",
+    "min_signals": 3,
+    "sl_atr": 2.5,
+    "tp_atr": 1.5,
+    "oos": {
+      "trades": 15,
+      "return": 8.5,
+      "win_rate": 80.0,
+      "pf": 2.39,
+      "max_dd": -4.0
+    },
+    "edge": true
+  }
+}

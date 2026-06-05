@@ -23,20 +23,19 @@ DATA.mkdir(exist_ok=True)
 STATE_FILE  = DATA / "bot_state.json"
 CONFIG_FILE = DATA / "bot_config.json"
 
-# ── Optimized config (validated out-of-sample on 2yr H1 data) ──────────────────
+# ── Optimized config — each pair uses its OWN best validated timeframe, min-signal
+#    count, and SL/TP (from 70/30 walk-forward; only OOS profit-factor>1.05 pairs).
 PER_PAIR = {
-    "XAUUSD": {"sl_atr": 1.5, "tp_atr": 1.0},
-    "USDCAD": {"sl_atr": 2.0, "tp_atr": 1.0},
-    "EURJPY": {"sl_atr": 1.0, "tp_atr": 1.0},
-    "AUDUSD": {"sl_atr": 2.0, "tp_atr": 1.0},
+    "XAUUSD": {"tf": "D1", "min_sig": 3, "sl_atr": 0.5, "tp_atr": 4.0},  # OOS PF 3.34
+    "GBPUSD": {"tf": "D1", "min_sig": 3, "sl_atr": 1.5, "tp_atr": 1.5},  # OOS PF 2.80
+    "EURJPY": {"tf": "D1", "min_sig": 3, "sl_atr": 2.5, "tp_atr": 1.5},  # OOS PF 2.39
+    "USDCAD": {"tf": "H1", "min_sig": 4, "sl_atr": 2.5, "tp_atr": 1.0},  # OOS PF 1.42
 }
 DEFAULT_CONFIG = {
     "running":       True,
     "symbols":       list(PER_PAIR.keys()),
-    "timeframe":     "H1",
-    "min_conf_pct":  45,
     "risk_pct":      2,
-    "max_positions": 8,
+    "max_positions": 6,
     "news_filter":   True,
 }
 
@@ -146,28 +145,38 @@ def scan(state, cfg):
             keep.append(pos)
     state["positions"] = keep
 
-    # 2. open new positions
+    # 2. open new positions — per-pair timeframe + min-signal COUNT gate
+    #    (replicates the validated backtest entry exactly)
     open_syms = {p["symbol"] for p in state["positions"]}
     for sym in cfg["symbols"]:
         if len(state["positions"]) >= cfg["max_positions"]: break
         if sym in open_syms: continue
-        r, price, atr = analyze(sym, cfg["timeframe"])
+        pp = PER_PAIR.get(sym)
+        if not pp: continue
+        r, price, atr = analyze(sym, pp["tf"])
         if r is None or atr <= 0: continue
-        action = r["overall"]; conf = int(r["overall_strength"]*100)
-        if action == "Hold" or conf < cfg["min_conf_pct"]: continue
+
+        bc, sc = r["buy_count"], r["sell_count"]
+        min_sig = pp["min_sig"]
+        if bc >= min_sig and bc > sc:
+            action, d = "Buy", 1
+        elif sc >= min_sig and sc > bc:
+            action, d = "Sell", -1
+        else:
+            continue
+
         if cfg.get("news_filter") and news_blocked(sym):
             log.info(f"skip {sym}: news"); continue
-        pp = PER_PAIR.get(sym, {"sl_atr":1.5,"tp_atr":1.5})
-        d = 1 if action == "Buy" else -1
+
         sl = round(price - d*atr*pp["sl_atr"], 5)
         tp = round(price + d*atr*pp["tp_atr"], 5)
         risk = state["balance"] * (cfg["risk_pct"]/100)
         tid = state["scan_count"]*100 + len(state["trades"]) + len(state["positions"]) + 1
         state["positions"].append({"id":tid,"symbol":sym,"direction":action,
-            "entry":price,"sl":sl,"tp":tp,"risk_usd":risk,"atr":atr,
+            "entry":price,"sl":sl,"tp":tp,"risk_usd":risk,"atr":atr,"tf":pp["tf"],
             "opened_at":now(),"pnl":0.0,"current_price":price})
         open_syms.add(sym)
-        log.info(f"OPEN {action} {sym} @ {price} SL {sl} TP {tp} conf {conf}%")
+        log.info(f"OPEN {action} {sym} [{pp['tf']}] @ {price} SL {sl} TP {tp} ({bc}B/{sc}S)")
 
     state["scan_count"] += 1
     state["last_scan"] = now()
