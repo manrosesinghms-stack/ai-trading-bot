@@ -1,0 +1,154 @@
+{
+  "EURUSD": {
+    "min_signals": 4,
+    "sl_atr": 2.0,
+    "tp_atr": 3.0,
+    "oos": {
+      "trades": 41,
+      "return": -6.3,
+      "win_rate": 39.0,
+      "pf": 0.88,
+      "max_dd": -15.8
+    },
+    "is": {
+      "trades": 124,
+      "return": -2.2,
+      "win_rate": 41.9,
+      "pf": 0.99,
+      "max_dd": -33.1
+    }
+  },
+  "GBPUSD": {
+    "min_signals": 4,
+    "sl_atr": 2.0,
+    "tp_atr": 2.5,
+    "oos": {
+      "trades": 77,
+      "return": -23.7,
+      "win_rate": 39.0,
+      "pf": 0.73,
+      "max_dd": -27.3
+    },
+    "is": {
+      "trades": 175,
+      "return": -33.0,
+      "win_rate": 41.7,
+      "pf": 0.8,
+      "max_dd": -38.9
+    }
+  },
+  "USDJPY": {
+    "min_signals": 3,
+    "sl_atr": 1.5,
+    "tp_atr": 3.0,
+    "oos": {
+      "trades": 279,
+      "return": -77.3,
+      "win_rate": 26.2,
+      "pf": 0.65,
+      "max_dd": -77.8
+    },
+    "is": {
+      "trades": 711,
+      "return": 48.4,
+      "win_rate": 35.9,
+      "pf": 1.04,
+      "max_dd": -39.5
+    }
+  },
+  "XAUUSD": {
+    "min_signals": 3,
+    "sl_atr": 1.5,
+    "tp_atr": 1.0,
+    "oos": {
+      "trades": 460,
+      "return": 74.3,
+      "win_rate": 64.6,
+      "pf": 1.15,
+      "max_dd": -23.6
+    },
+    "is": {
+      "trades": 1081,
+      "return": 128.0,
+      "win_rate": 64.1,
+      "pf": 1.11,
+      "max_dd": -40.7
+    }
+  },
+  "AUDUSD": {
+    "min_signals": 4,
+    "sl_atr": 2.0,
+    "tp_atr": 1.0,
+    "oos": {
+      "trades": 65,
+      "return": 0.6,
+      "win_rate": 72.3,
+      "pf": 1.01,
+      "max_dd": -6.5
+    },
+    "is": {
+      "trades": 176,
+      "return": -49.2,
+      "win_rate": 58.0,
+      "pf": 0.59,
+      "max_dd": -52.7
+    }
+  },
+  "USDCAD": {
+    "min_signals": 4,
+    "sl_atr": 2.0,
+    "tp_atr": 1.0,
+    "oos": {
+      "trades": 63,
+      "return": 8.2,
+      "win_rate": 74.6,
+      "pf": 1.23,
+      "max_dd": -7.3
+    },
+    "is": {
+      "trades": 194,
+      "return": -37.8,
+      "win_rate": 61.9,
+      "pf": 0.69,
+      "max_dd": -42.9
+    }
+  },
+  "GBPJPY": {
+    "min_signals": 4,
+    "sl_atr": 2.0,
+    "tp_atr": 1.5,
+    "oos": {
+      "trades": 63,
+      "return": -38.0,
+      "win_rate": 38.1,
+      "pf": 0.42,
+      "max_dd": -39.7
+    },
+    "is": {
+      "trades": 196,
+      "return": -14.4,
+      "win_rate": 57.1,
+      "pf": 0.92,
+      "max_dd": -27.1
+    }
+  },
+  "EURJPY": {
+    "min_signals": 4,
+    "sl_atr": 1.0,
+    "tp_atr": 1.0,
+    "oos": {
+      "trades": 75,
+      "return": 1.7,
+      "win_rate": 54.7,
+      "pf": 1.02,
+      "max_dd": -8.0
+    },
+    "is": {
+      "trades": 225,
+      "return": -12.3,
+      "win_rate": 52.0,
+      "pf": 0.93,
+      "max_dd": -32.9
+    }
+  }
+}
