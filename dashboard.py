@@ -33,7 +33,7 @@ CONFIG_FILE = DATA / "bot_config.json"
 
 try:
     from streamlit_autorefresh import st_autorefresh
-    st_autorefresh(interval=60_000, key="ref")
+    st_autorefresh(interval=300_000, key="ref")   # refresh every 5 minutes
 except ImportError:
     pass
 
@@ -121,6 +121,24 @@ with b1:
 with b2:
     if st.button("🔄 Refresh", use_container_width=True):
         st.rerun()
+
+# ── Prominent "is the bot alive?" heartbeat banner ──
+_now = datetime.now(timezone.utc)
+_mins = None
+if last and last != "never":
+    try:
+        _lt = datetime.strptime(last, "%Y-%m-%d %H:%M:%S UTC").replace(tzinfo=timezone.utc)
+        _mins = (_now - _lt).total_seconds()/60
+    except Exception:
+        _mins = None
+if _mins is None:
+    st.warning("⏳ Bot hasn't scanned yet — waiting for the first run.")
+elif _mins <= 30:
+    st.success(f"🟢 BOT IS ALIVE — last scanned **{int(_mins)} min ago** (scan #{state['scan_count']}). Page auto-refreshes every 5 min · {_now.strftime('%H:%M UTC')}")
+elif _mins <= 90:
+    st.warning(f"🟡 Bot last scanned **{int(_mins)} min ago** — GitHub cron may be delayed (it's throttled on free tier).")
+else:
+    st.error(f"🔴 Bot hasn't scanned in **{int(_mins)} min** — the cron isn't firing. Trigger a run or set up the pinger.")
 
 # ── Stats ──
 bal = state["balance"]; sb = state["start_balance"]

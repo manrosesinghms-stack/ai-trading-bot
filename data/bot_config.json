@@ -3,7 +3,7 @@
   "symbols": [
     "XAUUSD"
   ],
-  "risk_pct": 2,
+  "risk_pct": 5,
   "max_positions": 3,
   "news_filter": true
 }
