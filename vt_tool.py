@@ -56,7 +56,11 @@ def color(v):
     if v=="LONG": return "background:#0d2b16;color:#00FF88;font-weight:700"
     if v=="SHORT": return "background:#2b0d0d;color:#FF4444;font-weight:700"
     return "color:#888"
-st.dataframe(dfc.style.applymap(color, subset=["Signal"]), use_container_width=True, hide_index=True)
+try:
+    styled = dfc.style.map(color, subset=["Signal"])
+except AttributeError:
+    styled = dfc.style.applymap(color, subset=["Signal"])
+st.dataframe(styled, use_container_width=True, hide_index=True)
 longs=sum(1 for r in rows if r["Signal"]=="LONG"); shorts=sum(1 for r in rows if r["Signal"]=="SHORT")
 st.caption(f"Net stance: {longs} long / {shorts} short / {len(rows)-longs-shorts} flat across {len(rows)} markets")
 
