@@ -26,13 +26,10 @@ CONFIG_FILE = DATA / "bot_config.json"
 # ── Optimized config — each pair uses its OWN best validated timeframe, min-signal
 #    count, and SL/TP (from 70/30 walk-forward; only OOS profit-factor>1.05 pairs).
 # H1 (hourly) configs — frequent, VISIBLE trades you can watch (entry/SL/TP/stats)
+# Gold-only — the ONE validated config that's positive AND active:
+# H1, 3+ signals, SL 1.5xATR / TP 1.0xATR -> backtest WR 64%, PF 1.13, +297%/2yr
 PER_PAIR = {
-    "XAUUSD": {"tf": "H1", "min_sig": 2, "sl_atr": 1.5, "tp_atr": 1.0},
-    "USDCAD": {"tf": "H1", "min_sig": 2, "sl_atr": 2.0, "tp_atr": 1.0},
-    "EURUSD": {"tf": "H1", "min_sig": 2, "sl_atr": 1.5, "tp_atr": 1.5},
-    "GBPUSD": {"tf": "H1", "min_sig": 2, "sl_atr": 1.5, "tp_atr": 1.5},
-    "USDJPY": {"tf": "H1", "min_sig": 2, "sl_atr": 1.5, "tp_atr": 1.5},
-    "AUDUSD": {"tf": "H1", "min_sig": 2, "sl_atr": 2.0, "tp_atr": 1.0},
+    "XAUUSD": {"tf": "H1", "min_sig": 3, "sl_atr": 1.5, "tp_atr": 1.0},
 }
 DEFAULT_CONFIG = {
     "running":       True,

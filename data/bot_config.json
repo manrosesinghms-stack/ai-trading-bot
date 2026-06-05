@@ -1,14 +1,9 @@
 {
   "running": true,
   "symbols": [
-    "XAUUSD",
-    "USDCAD",
-    "EURUSD",
-    "GBPUSD",
-    "USDJPY",
-    "AUDUSD"
+    "XAUUSD"
   ],
   "risk_pct": 2,
-  "max_positions": 6,
+  "max_positions": 3,
   "news_filter": true
 }
