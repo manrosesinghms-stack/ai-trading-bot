@@ -1,0 +1,14 @@
+# Never upload these to GitHub
+.env
+.streamlit/secrets.toml
+data/auto_trader_state.json
+data/webhook_signals.json
+data/webhook_url.txt
+data/bot_engine.log
+data/*.csv
+data/knowledge_base.json
+data/cot/
+__pycache__/
+*.pyc
+*.pyo
+.DS_Store
