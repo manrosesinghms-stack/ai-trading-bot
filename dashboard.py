@@ -37,7 +37,19 @@ try:
 except ImportError:
     pass
 
+RAW_BASE = "https://raw.githubusercontent.com/manrosesinghms-stack/ai-trading-bot/main/data"
+
 def load(p, d):
+    # Prefer the live file from GitHub (updated by the cron every 15 min),
+    # fall back to the local copy bundled at deploy time.
+    name = p.name
+    try:
+        import requests
+        r = requests.get(f"{RAW_BASE}/{name}?t={int(datetime.now(timezone.utc).timestamp())}", timeout=6)
+        if r.status_code == 200:
+            return r.json()
+    except Exception:
+        pass
     if p.exists():
         try: return json.loads(p.read_text())
         except Exception: pass
