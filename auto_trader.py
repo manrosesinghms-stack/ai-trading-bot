@@ -256,10 +256,90 @@ def close_position(pos, exit_price, reason):
     st.session_state.bot_trades.insert(0, trade)
     return trade
 
-def run_scan(symbols, timeframe, min_conf, risk_pct, max_positions, sl_mult, tp_mult):
+def smart_filters(sym, timeframe, action, conf_pct, price, atr, smart_cfg):
+    """
+    Run advanced confluence filters on a candidate trade.
+    Returns (approved: bool, reason: str, overrides: dict).
+    overrides may contain ai_sl_pips / ai_tp_pips from Claude.
+    """
+    overrides = {}
+
+    # ── 1. News blocking ──
+    if smart_cfg.get("news"):
+        try:
+            from news_calendar import should_block_trade
+            blocked, reason = should_block_trade(sym, 30)
+            if blocked:
+                return False, f"🚫 News block: {reason[:50]}", overrides
+        except Exception:
+            pass
+
+    # ── 2. Multi-timeframe confluence ──
+    if smart_cfg.get("mtf"):
+        try:
+            from mtf_analyzer import analyze_mtf
+            mtf = analyze_mtf(sym, timeframe)
+            htf = mtf.get("higher_tf_trend", "Hold")
+            # Veto if higher timeframe strongly opposes the trade direction
+            if action == "Buy" and htf == "Sell":
+                return False, f"🚫 MTF veto: higher TF bearish (score {mtf['confluence_score']:+.2f})", overrides
+            if action == "Sell" and htf == "Buy":
+                return False, f"🚫 MTF veto: higher TF bullish (score {mtf['confluence_score']:+.2f})", overrides
+        except Exception:
+            pass
+
+    # ── 3. COT institutional positioning ──
+    if smart_cfg.get("cot"):
+        try:
+            from cot_feed import get_cot_signal
+            cot = get_cot_signal(sym)
+            direction = cot.get("direction", "")
+            if direction:
+                if action == "Buy" and "Bearish" in direction and cot.get("strength", 0) > 0.6:
+                    return False, f"🚫 COT veto: institutions heavily {direction}", overrides
+                if action == "Sell" and "Bullish" in direction and cot.get("strength", 0) > 0.6:
+                    return False, f"🚫 COT veto: institutions heavily {direction}", overrides
+        except Exception:
+            pass
+
+    # ── 4. Claude AI confirmation (final gate) ──
+    if smart_cfg.get("ai"):
+        try:
+            import os
+            if os.environ.get("ANTHROPIC_API_KEY"):
+                from strategies import run_all_strategies, calculate_all_indicators
+                from ai_analyzer import analyze_trade_opportunity
+                # Re-fetch a strategy result dict for the prompt
+                acc = {"balance": st.session_state.bot_balance, "equity": st.session_state.bot_balance,
+                       "free_margin": st.session_state.bot_balance, "currency": "USD"}
+                _, res2, _, _ = fetch_data(sym, timeframe)
+                if res2:
+                    ai = analyze_trade_opportunity(sym, timeframe, res2, acc, {"open_positions_count": len(st.session_state.bot_positions)})
+                    ai_action = ai.get("action", "Hold")
+                    ai_conf   = ai.get("confidence", 0)
+                    # AI must agree with direction and have reasonable confidence
+                    if ai_action != action:
+                        return False, f"🚫 AI veto: Claude says {ai_action} (not {action})", overrides
+                    if ai_conf < 0.55:
+                        return False, f"🚫 AI veto: Claude confidence only {int(ai_conf*100)}%", overrides
+                    # Use Claude's SL/TP if provided
+                    if ai.get("stop_loss_pips"):
+                        overrides["ai_sl_pips"] = ai["stop_loss_pips"]
+                    if ai.get("take_profit_pips"):
+                        overrides["ai_tp_pips"] = ai["take_profit_pips"]
+                    overrides["ai_conf"] = int(ai_conf * 100)
+        except Exception as e:
+            # AI errors should not block trading — just note it
+            overrides["ai_note"] = f"AI check skipped ({str(e)[:30]})"
+
+    return True, "✅ All filters passed", overrides
+
+
+def run_scan(symbols, timeframe, min_conf, risk_pct, max_positions, sl_mult, tp_mult, smart_cfg=None):
     """One scan cycle: check positions + look for new entries."""
     results = []
     current_prices = {}
+    smart_cfg = smart_cfg or {}
 
     # ── 1. Fetch current prices for all open positions ──
     open_syms = set(p["symbol"] for p in st.session_state.bot_positions)
@@ -323,9 +403,24 @@ def run_scan(symbols, timeframe, min_conf, risk_pct, max_positions, sl_mult, tp_
                 if action == "Hold" or conf_pct < min_conf:
                     continue
 
+                # ── Smart confluence filters (MTF, news, COT, Claude AI) ──
+                approved, reason, overrides = smart_filters(
+                    sym, timeframe, action, conf_pct, price, atr, smart_cfg
+                )
+                if not approved:
+                    results.append(f"⊘ {sym} {action} {conf_pct}% — {reason}")
+                    continue
+
                 risk_usd = st.session_state.bot_balance * (risk_pct / 100)
-                sl_p     = atr * sl_mult
-                tp_p     = atr * tp_mult
+                pip_sz   = pip(sym)
+
+                # Use Claude's SL/TP if it provided them, else ATR-based
+                if overrides.get("ai_sl_pips"):
+                    sl_p = overrides["ai_sl_pips"] * pip_sz
+                    tp_p = overrides.get("ai_tp_pips", overrides["ai_sl_pips"] * 2) * pip_sz
+                else:
+                    sl_p = atr * sl_mult
+                    tp_p = atr * tp_mult
 
                 if action == "Buy":
                     sl_price = round(price - sl_p, 5)
@@ -337,10 +432,11 @@ def run_scan(symbols, timeframe, min_conf, risk_pct, max_positions, sl_mult, tp_
                 pos = open_position(sym, action, price, sl_price, tp_price, risk_usd, atr)
                 buy_c  = res["buy_count"]
                 sell_c = res["sell_count"]
+                ai_tag = f" | 🤖 AI {overrides['ai_conf']}%" if overrides.get("ai_conf") else ""
                 results.append(
                     f"{'🟢' if action=='Buy' else '🔴'} {action} {sym} "
                     f"@ {fmt(price,sym)} | SL {fmt(sl_price,sym)} | TP {fmt(tp_price,sym)} "
-                    f"| Conf {conf_pct}% ({buy_c}B/{sell_c}S)"
+                    f"| Conf {conf_pct}% ({buy_c}B/{sell_c}S){ai_tag}"
                 )
             except Exception as e:
                 results.append(f"⚠️ {sym}: {e}")
@@ -377,6 +473,18 @@ with st.sidebar:
     max_positions= st.slider("Max open positions", 1, 6, 3)
     sl_mult      = st.slider("SL × ATR", 0.5, 3.0, 1.5, 0.25)
     tp_mult      = st.slider("TP × ATR", 1.0, 5.0, 2.5, 0.25)
+
+    st.markdown("### 🧠 Smart Filters")
+    st.caption("Extra confluence checks before every trade")
+    f_mtf  = st.toggle("Multi-timeframe confluence", value=True,
+                        help="Veto trades that fight the higher-timeframe trend")
+    f_news = st.toggle("News blocking", value=True,
+                        help="Skip trades within 30 min of high-impact news")
+    f_cot  = st.toggle("COT institutional bias", value=True,
+                        help="Veto trades against heavy institutional positioning (needs COT data built)")
+    f_ai   = st.toggle("Claude AI confirmation", value=True,
+                        help="Claude reviews & can veto each trade (~1.5¢ per check)")
+    smart_cfg = {"mtf": f_mtf, "news": f_news, "cot": f_cot, "ai": f_ai}
 
     st.divider()
     start_bal = st.number_input("Starting balance ($)", 10.0, 10000.0,
@@ -436,7 +544,7 @@ with b2:
             with st.spinner("Scanning markets..."):
                 scan_log = run_scan(
                     selected_symbols, timeframe, min_conf_pct,
-                    risk_pct, max_positions, sl_mult, tp_mult,
+                    risk_pct, max_positions, sl_mult, tp_mult, smart_cfg,
                 )
             st.cache_data.clear()
             for msg in scan_log:
@@ -496,7 +604,7 @@ if st.session_state.bot_running and st.session_state.bot_scan_count > 0:
     # Run silently in background on each autorefresh
     try:
         run_scan(selected_symbols, timeframe, min_conf_pct,
-                 risk_pct, max_positions, sl_mult, tp_mult)
+                 risk_pct, max_positions, sl_mult, tp_mult, smart_cfg)
     except Exception:
         pass
 
