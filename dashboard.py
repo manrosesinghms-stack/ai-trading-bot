@@ -63,6 +63,34 @@ def fmt(p, s):
     d = 3 if "JPY" in s else (2 if "XAU" in s else 5)
     return f"{p:.{d}f}"
 
+PIP = {"EURUSD":.0001,"GBPUSD":.0001,"AUDUSD":.0001,"USDCAD":.0001,
+       "USDCHF":.0001,"USDJPY":.01,"EURJPY":.01,"GBPJPY":.01,"XAUUSD":.1}
+
+@st.cache_data(ttl=55)
+def live_price(sym, _t=0):
+    try:
+        import yfinance as yf
+        from data_manager import PAIRS
+        df = yf.download(PAIRS.get(sym, sym+"=X"), period="1d", interval="5m",
+                         auto_adjust=True, progress=False)
+        if df.empty: return None
+        if hasattr(df.columns, "levels"): df.columns = df.columns.get_level_values(0)
+        return float(df["Close"].iloc[-1])
+    except Exception:
+        return None
+
+# Recompute LIVE unrealized P&L for each open position (not the 15-min snapshot)
+_tick = int(datetime.now(timezone.utc).timestamp() // 55)
+for _p in state.get("positions", []):
+    px = live_price(_p["symbol"], _tick)
+    if px:
+        pp = PIP.get(_p["symbol"], .0001)
+        slp = abs(_p["entry"] - _p["sl"]) / pp
+        d = 1 if _p["direction"] == "Buy" else -1
+        pnl_pips = (px - _p["entry"]) / pp * d - 1.5
+        _p["current_price"] = px
+        _p["pnl"] = round(_p["risk_usd"] * (pnl_pips / max(slp, 1)), 4)
+
 # ── Header ──
 running = cfg.get("running", True)
 last = state.get("last_scan", "never")
