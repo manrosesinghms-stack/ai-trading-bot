@@ -372,7 +372,7 @@ with st.sidebar:
         default=["EURUSD","GBPUSD","XAUUSD","USDJPY"],
     )
     timeframe    = st.selectbox("Timeframe", TFS, index=2)
-    min_conf_pct = st.slider("Min signal confidence %", 40, 90, 60, 5)
+    min_conf_pct = st.slider("Min signal confidence %", 30, 90, 50, 5)
     risk_pct     = st.slider("Risk per trade (% of balance)", 1, 10, 3)
     max_positions= st.slider("Max open positions", 1, 6, 3)
     sl_mult      = st.slider("SL × ATR", 0.5, 3.0, 1.5, 0.25)

@@ -300,10 +300,18 @@ def run_all_strategies(df: pd.DataFrame) -> dict:
     buy_str    = sum(s["strength"] for s in strats.values() if s["signal"] == "Buy")
     sell_str   = sum(s["strength"] for s in strats.values() if s["signal"] == "Sell")
 
+    # Confidence = average strength of agreeing signals, BOOSTED by consensus
+    # breadth (more strategies agreeing → higher conviction). Capped at 1.0.
+    def _conf(total_str: float, count: int) -> float:
+        if count == 0:
+            return 0.0
+        avg = total_str / count
+        return min(1.0, avg * (1 + 0.20 * (count - 1)))
+
     if buy_count > sell_count and buy_str > sell_str:
-        overall, strength = "Buy",  buy_str  / max(buy_count, 1)
+        overall, strength = "Buy",  _conf(buy_str,  buy_count)
     elif sell_count > buy_count and sell_str > buy_str:
-        overall, strength = "Sell", sell_str / max(sell_count, 1)
+        overall, strength = "Sell", _conf(sell_str, sell_count)
     else:
         overall, strength = "Hold", 0.0
 
