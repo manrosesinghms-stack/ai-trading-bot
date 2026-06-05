@@ -1,0 +1,6 @@
+{
+  "start_date": "2026-06-05",
+  "start_balance": 500.0,
+  "strategy": "VT Trend Portfolio",
+  "note": "Paper account - tracks the vol-targeted diversified trend portfolio forward from start_date"
+}

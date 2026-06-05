@@ -1,0 +1,130 @@
+{
+  "EURUSD": {
+    "bars": 1300,
+    "span": "1300 bars",
+    "resistance": {
+      "tests": 689,
+      "bounce_rate": 28.9,
+      "break_rate": 71.1,
+      "avg_bounce_atr": 2.33
+    },
+    "support": {
+      "tests": 526,
+      "bounce_rate": 28.5,
+      "break_rate": 71.5,
+      "avg_bounce_atr": 2.39
+    }
+  },
+  "GBPUSD": {
+    "bars": 1300,
+    "span": "1300 bars",
+    "resistance": {
+      "tests": 662,
+      "bounce_rate": 30.5,
+      "break_rate": 69.5,
+      "avg_bounce_atr": 2.36
+    },
+    "support": {
+      "tests": 586,
+      "bounce_rate": 33.1,
+      "break_rate": 66.9,
+      "avg_bounce_atr": 2.27
+    }
+  },
+  "USDJPY": {
+    "bars": 1300,
+    "span": "1300 bars",
+    "resistance": {
+      "tests": 531,
+      "bounce_rate": 24.3,
+      "break_rate": 75.7,
+      "avg_bounce_atr": 2.59
+    },
+    "support": {
+      "tests": 386,
+      "bounce_rate": 44.3,
+      "break_rate": 55.7,
+      "avg_bounce_atr": 2.51
+    }
+  },
+  "XAUUSD": {
+    "bars": 1258,
+    "span": "1258 bars",
+    "resistance": {
+      "tests": 284,
+      "bounce_rate": 25.4,
+      "break_rate": 74.6,
+      "avg_bounce_atr": 3.27
+    },
+    "support": {
+      "tests": 203,
+      "bounce_rate": 36.9,
+      "break_rate": 63.1,
+      "avg_bounce_atr": 3.72
+    }
+  },
+  "AUDUSD": {
+    "bars": 1300,
+    "span": "1300 bars",
+    "resistance": {
+      "tests": 709,
+      "bounce_rate": 35.8,
+      "break_rate": 64.2,
+      "avg_bounce_atr": 2.75
+    },
+    "support": {
+      "tests": 1024,
+      "bounce_rate": 32.4,
+      "break_rate": 67.6,
+      "avg_bounce_atr": 2.29
+    }
+  },
+  "USDCAD": {
+    "bars": 1300,
+    "span": "1300 bars",
+    "resistance": {
+      "tests": 987,
+      "bounce_rate": 26.4,
+      "break_rate": 73.6,
+      "avg_bounce_atr": 2.33
+    },
+    "support": {
+      "tests": 485,
+      "bounce_rate": 43.5,
+      "break_rate": 56.5,
+      "avg_bounce_atr": 2.43
+    }
+  },
+  "GBPJPY": {
+    "bars": 1300,
+    "span": "1300 bars",
+    "resistance": {
+      "tests": 569,
+      "bounce_rate": 24.8,
+      "break_rate": 75.2,
+      "avg_bounce_atr": 2.53
+    },
+    "support": {
+      "tests": 298,
+      "bounce_rate": 51.0,
+      "break_rate": 49.0,
+      "avg_bounce_atr": 2.9
+    }
+  },
+  "EURJPY": {
+    "bars": 1300,
+    "span": "1300 bars",
+    "resistance": {
+      "tests": 550,
+      "bounce_rate": 24.0,
+      "break_rate": 76.0,
+      "avg_bounce_atr": 2.27
+    },
+    "support": {
+      "tests": 308,
+      "bounce_rate": 46.8,
+      "break_rate": 53.2,
+      "avg_bounce_atr": 2.49
+    }
+  }
+}
