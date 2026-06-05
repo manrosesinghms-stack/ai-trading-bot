@@ -465,14 +465,14 @@ with st.sidebar:
 
     selected_symbols = st.multiselect(
         "Scan Symbols", SYMBOLS,
-        default=["EURUSD","GBPUSD","XAUUSD","USDJPY"],
+        default=["EURUSD","GBPUSD","XAUUSD","USDJPY","AUDUSD","USDCAD"],
     )
-    timeframe    = st.selectbox("Timeframe", TFS, index=2)
-    min_conf_pct = st.slider("Min signal confidence %", 30, 90, 50, 5)
-    risk_pct     = st.slider("Risk per trade (% of balance)", 1, 10, 3)
-    max_positions= st.slider("Max open positions", 1, 6, 3)
-    sl_mult      = st.slider("SL × ATR", 0.5, 3.0, 1.5, 0.25)
-    tp_mult      = st.slider("TP × ATR", 1.0, 5.0, 2.5, 0.25)
+    timeframe    = st.selectbox("Timeframe", TFS, index=0)   # M15 = more signals
+    min_conf_pct = st.slider("Min signal confidence %", 30, 90, 45, 5)
+    risk_pct     = st.slider("Risk per trade (% of balance)", 1, 10, 2)
+    max_positions= st.slider("Max open positions", 1, 12, 8)
+    sl_mult      = st.slider("SL × ATR", 0.5, 3.0, 1.0, 0.25)   # tighter → closes faster
+    tp_mult      = st.slider("TP × ATR", 1.0, 5.0, 1.5, 0.25)   # tighter → hits faster
 
     st.markdown("### 🧠 Smart Filters")
     st.caption("Extra confluence checks before every trade")
@@ -482,8 +482,8 @@ with st.sidebar:
                         help="Skip trades within 30 min of high-impact news")
     f_cot  = st.toggle("COT institutional bias", value=True,
                         help="Veto trades against heavy institutional positioning (needs COT data built)")
-    f_ai   = st.toggle("Claude AI confirmation", value=True,
-                        help="Claude reviews & can veto each trade (~1.5¢ per check)")
+    f_ai   = st.toggle("Claude AI confirmation", value=False,
+                        help="Claude reviews & can veto each trade (~1.5¢ per check). Off by default for speed/volume.")
     smart_cfg = {"mtf": f_mtf, "news": f_news, "cot": f_cot, "ai": f_ai}
 
     st.divider()
