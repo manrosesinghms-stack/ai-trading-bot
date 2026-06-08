@@ -1,7 +1,8 @@
 {
-  "balance": 500.0,
+  "balance": 516.5540693536302,
   "start_balance": 500.0,
-  "positions": [
+  "positions": [],
+  "trades": [
     {
       "id": 201,
       "symbol": "XAUUSD",
@@ -13,12 +14,16 @@
       "atr": 22.20342534823561,
       "tf": "H1",
       "opened_at": "2026-06-05 21:33:07 UTC",
-      "pnl": 9.2703,
-      "current_price": 4341.39990234375
+      "pnl": 16.5541,
+      "current_price": 4341.39990234375,
+      "exit": 4331.69648,
+      "closed_at": "2026-06-08 01:40:38 UTC",
+      "reason": "Take Profit",
+      "balance_after": 516.5541,
+      "total_return": 3.31
     }
   ],
-  "trades": [],
-  "scan_count": 629,
+  "scan_count": 630,
   "started_at": "2026-06-05 20:21:42 UTC",
-  "last_scan": "2026-06-08 01:35:45 UTC"
+  "last_scan": "2026-06-08 01:40:39 UTC"
 }
