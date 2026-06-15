@@ -13,8 +13,8 @@
       "atr": 26.91131482228249,
       "tf": "H1",
       "opened_at": "2026-06-15 03:00:57 UTC",
-      "pnl": 12.3735,
-      "current_price": 4374.0
+      "pnl": 14.4187,
+      "current_price": 4377.0
     }
   ],
   "trades": [
@@ -418,7 +418,7 @@
       "total_return": 3.31
     }
   ],
-  "scan_count": 2793,
+  "scan_count": 2794,
   "started_at": "2026-06-05 20:21:42 UTC",
-  "last_scan": "2026-06-15 13:30:50 UTC"
+  "last_scan": "2026-06-15 13:35:55 UTC"
 }
