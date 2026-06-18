@@ -1,7 +1,23 @@
 {
-  "balance": 554.7734932237754,
+  "balance": 573.145674199934,
   "start_balance": 500.0,
   "positions": [
+    {
+      "id": 360131,
+      "symbol": "XAUUSD",
+      "direction": "Sell",
+      "entry": 4304.60009765625,
+      "sl": 4338.83057,
+      "tp": 4281.77978,
+      "risk_usd": 28.6572837099967,
+      "atr": 22.820312871084933,
+      "tf": "H1",
+      "opened_at": "2026-06-18 08:40:47 UTC",
+      "pnl": 0.0,
+      "current_price": 4304.60009765625
+    }
+  ],
+  "trades": [
     {
       "id": 357130,
       "symbol": "XAUUSD",
@@ -13,11 +29,14 @@
       "atr": 23.063562019022424,
       "tf": "H1",
       "opened_at": "2026-06-18 06:10:49 UTC",
-      "pnl": 17.1185,
-      "current_price": 4307.2001953125
-    }
-  ],
-  "trades": [
+      "pnl": 18.3722,
+      "current_price": 4307.2001953125,
+      "exit": 4305.63663,
+      "closed_at": "2026-06-18 08:40:47 UTC",
+      "reason": "Take Profit",
+      "balance_after": 573.1457,
+      "total_return": 14.63
+    },
     {
       "id": 349529,
       "symbol": "XAUUSD",
@@ -570,7 +589,7 @@
       "total_return": 3.31
     }
   ],
-  "scan_count": 3601,
+  "scan_count": 3602,
   "started_at": "2026-06-05 20:21:42 UTC",
-  "last_scan": "2026-06-18 08:35:50 UTC"
+  "last_scan": "2026-06-18 08:40:47 UTC"
 }
