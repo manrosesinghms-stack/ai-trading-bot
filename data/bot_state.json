@@ -1,7 +1,22 @@
 {
   "balance": 467.5452633294181,
   "start_balance": 500.0,
-  "positions": [],
+  "positions": [
+    {
+      "id": 809079,
+      "symbol": "XAUUSD",
+      "direction": "Sell",
+      "entry": 4048.39990234375,
+      "sl": 4073.33517,
+      "tp": 4031.77639,
+      "risk_usd": 23.377263166470907,
+      "atr": 16.623513583197287,
+      "tf": "H1",
+      "opened_at": "2026-07-23 17:46:18 UTC",
+      "pnl": 0.0,
+      "current_price": 4048.39990234375
+    }
+  ],
   "trades": [
     {
       "id": 807178,
@@ -1486,7 +1501,7 @@
       "total_return": 3.31
     }
   ],
-  "scan_count": 8090,
+  "scan_count": 8091,
   "started_at": "2026-06-05 20:21:42 UTC",
-  "last_scan": "2026-07-23 16:08:11 UTC"
+  "last_scan": "2026-07-23 17:46:18 UTC"
 }
