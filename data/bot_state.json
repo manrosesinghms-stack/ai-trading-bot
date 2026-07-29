@@ -1,7 +1,23 @@
 {
-  "balance": 372.9908974735372,
+  "balance": 354.2127149992848,
   "start_balance": 500.0,
   "positions": [
+    {
+      "id": 816786,
+      "symbol": "XAUUSD",
+      "direction": "Buy",
+      "entry": 4065.60009765625,
+      "sl": 4040.96549,
+      "tp": 4082.02317,
+      "risk_usd": 17.71063574996424,
+      "atr": 16.423070524919314,
+      "tf": "H1",
+      "opened_at": "2026-07-29 14:42:51 UTC",
+      "pnl": 0.0,
+      "current_price": 4065.60009765625
+    }
+  ],
+  "trades": [
     {
       "id": 816685,
       "symbol": "XAUUSD",
@@ -13,11 +29,14 @@
       "atr": 14.497737019658254,
       "tf": "H1",
       "opened_at": "2026-07-29 12:21:38 UTC",
-      "pnl": 0.0,
-      "current_price": 4088.0
-    }
-  ],
-  "trades": [
+      "pnl": -18.7782,
+      "current_price": 4088.0,
+      "exit": 4066.25339,
+      "closed_at": "2026-07-29 14:42:50 UTC",
+      "reason": "Stop Loss",
+      "balance_after": 354.2127,
+      "total_return": -29.16
+    },
     {
       "id": 815784,
       "symbol": "XAUUSD",
@@ -1615,7 +1634,7 @@
       "total_return": 3.31
     }
   ],
-  "scan_count": 8167,
+  "scan_count": 8168,
   "started_at": "2026-06-05 20:21:42 UTC",
-  "last_scan": "2026-07-29 12:21:38 UTC"
+  "last_scan": "2026-07-29 14:42:51 UTC"
 }
