@@ -1,7 +1,22 @@
 {
   "balance": 352.28422217819025,
   "start_balance": 500.0,
-  "positions": [],
+  "positions": [
+    {
+      "id": 818991,
+      "symbol": "XAUUSD",
+      "direction": "Buy",
+      "entry": 4137.0,
+      "sl": 4111.39901,
+      "tp": 4154.06732,
+      "risk_usd": 17.61421110890951,
+      "atr": 17.067323643581712,
+      "tf": "H1",
+      "opened_at": "2026-07-31 06:45:35 UTC",
+      "pnl": 0.0,
+      "current_price": 4137.0
+    }
+  ],
   "trades": [
     {
       "id": 818490,
@@ -1714,7 +1729,7 @@
       "total_return": 3.31
     }
   ],
-  "scan_count": 8189,
+  "scan_count": 8190,
   "started_at": "2026-06-05 20:21:42 UTC",
-  "last_scan": "2026-07-31 03:51:19 UTC"
+  "last_scan": "2026-07-31 06:45:35 UTC"
 }
